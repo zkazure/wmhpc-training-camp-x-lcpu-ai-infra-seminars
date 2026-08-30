@@ -40,4 +40,12 @@
    - ~__host__ __device__~ 
    - ~__constant__~
    - ~__shared__~
+3. modify.
+   #+begin_example
+   搬运 + kernel + 读回: 115.8 ms
+   搬运 + kernel + 读回: 95.8 ms
+   #+end_example
+   - kernel 启动和 CPU 是异步的。
+     原先的版本的同步在 kernel 启动后。
+   - 避免了数据的重复搬运。
 
