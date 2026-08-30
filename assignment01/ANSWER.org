@@ -37,7 +37,7 @@
 2. prob.
    - ~__global__~
    - ~__device__~
-   - ~__host__ __device__~ 
+   - ~__host__ __device__~
    - ~__constant__~
    - ~__shared__~
 3. modify.
@@ -46,6 +46,11 @@
    搬运 + kernel + 读回: 95.8 ms
    #+end_example
    - kernel 启动和 CPU 是异步的。
-     原先的版本的同步在 kernel 启动后。
-   - 避免了数据的重复搬运。
-
+     原先的版本的同步在 kernel 启动后 check kernel 里面。
+   - 和使用的卡有关系。
+4. concept。
+   - 不对。
+     kernel 启动对 host 是异步的。
+   - *正确* 。
+     同一个 stream 中的操作按提交顺序执行。
+   - 不会。
