@@ -67,6 +67,9 @@
      同一个 stream 中的操作按提交顺序执行。
    - 不会。
 5. end
-6. modify.
+6. end
+7. modify.
    价值在于同一个 kernel 启动的参数可以适配所有的 n。
    每个线程需要处理 n/grid.size 个线程并行，把并行限制在了 grid.size()，可能有资源的空闲。
+8. experiment。
+   程序正确性当然不能受到 block 的执行顺序的限制。
