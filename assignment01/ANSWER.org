@@ -19,3 +19,13 @@
 4. SIMD：single instruction multiple data，一个指令操作多个数据（向量化）。
    SIMT: single instruction multiple threads，每个线程跑一样的代码，但是数据、状态可能不同。
    不对。branch divergence 会让一个 warp 需要分开跑不同的分支，有性能代价。
+5. experiment.
+   | 配置             | 耗时 ms | ns/元素 |
+   |------------------+---------+---------|
+   | CPU 单线程       |   7.085 |    1.69 |
+   | GPU <<<1, 1>>>   | 133.670 |   31.87 |
+   | GPU <<<1, 256>>> |   2.060 |    0.49 |
+   | GPU 铺满 grid    |   0.022 |    0.01 |
+   - GPU 的延迟高，需要靠多线程掩盖。
+     CPU 乱序执行、分支预测。
+   - 多线程并行和调度，实现的数据并行计算和延迟掩盖。
