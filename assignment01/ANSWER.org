@@ -10,3 +10,10 @@
 2. GPU 的 FLOP 指标指的是所有线程全速运行的速度。
    但是对于一个严格的串行算法，同一时刻没有足够多的独立运算可以并行。
    而且受到单步延迟的影响。
+3. 填表。
+   | 执行层次       | thread                | warp                                    | block/CTA                                    | grid                                  |
+   | 软件含义       | kernel 的最小执行单位 | 一个 block 中连续的 32 个 thread 的组合  | 一组高效协作的 threads                       | 一次 kernel 创建的全部 threads blocks |
+   | 对应硬件       | 计算单元上的一个 lane | 由 SM 的 warp scheduler 调度的一组 lane | 同一个 block 的 thread 需要在同一个 SM 上执行 | 可用的 SM                             |
+   | 直接可用的存储 | 自己的寄存器          | 没有直接的 “warp memory”                | shared memory                                | global memory                         |
+   | 同步与通信手段 | （自身天然有序）      | __syncwarp(), __shfl_sync()...          | __syncthreads()...                           | kernel 边界                           |
+
