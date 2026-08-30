@@ -1,3 +1,4 @@
+#include <chrono> 
 #include <cstdio>
 #include <cstdlib>
 #include <cuda_runtime.h>
@@ -58,9 +59,27 @@ int main(int argc, char **argv) {
 
     int threads = 1024;
     int blocks = (n + threads - 1) / threads;
-    saxpy<<<blocks, threads>>>(d_x, d_y, n);
-    CUDA_CHECK_KERNEL();
 
+    auto t0 = std::chrono::steady_clock::now();
+    cudaEvent_t start, stop;
+    CUDA_CHECK(cudaEventCreate(&start));
+    CUDA_CHECK(cudaEventCreate(&stop));
+
+    CUDA_CHECK(cudaEventRecord(start));
+    
+    saxpy<<<blocks, threads>>>(d_x, d_y, n);
+    CUDA_CHECK(cudaGetLastError());
+    
+    CUDA_CHECK(cudaEventRecord(stop));
+
+    CUDA_CHECK(cudaEventSynchronize(stop));
+    
+	float kernel_ms = 0.0f;
+	CUDA_CHECK(cudaEventElapsedTime(&kernel_ms, start, stop));
+	
+	CUDA_CHECK(cudaEventDestroy(start));
+	CUDA_CHECK(cudaEventDestroy(stop));
+    
     CUDA_CHECK(cudaMemcpy(h_y, d_y, bytes, cudaMemcpyDeviceToHost));
     
     double s = 0.0;
