@@ -1,3 +1,15 @@
+* Environment
+
+- GPU 型号            :: NVIDIA GeForce RTX 4090 D
+- compute capability  :: 8.9
+- SM 数量             :: 114
+- warp 大小           :: 32
+- shared mem / block  :: 49152
+- max threads / SM    :: 1536
+- global mem          :: 25252724736
+- max threads / block :: 1024
+
+
 * 为什么要用 GPU
 
 1. prob
