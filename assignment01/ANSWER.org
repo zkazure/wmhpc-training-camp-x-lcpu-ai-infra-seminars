@@ -16,4 +16,6 @@
    | 对应硬件       | 计算单元上的一个 lane | 由 SM 的 warp scheduler 调度的一组 lane | 同一个 block 的 thread 需要在同一个 SM 上执行 | 可用的 SM                             |
    | 直接可用的存储 | 自己的寄存器          | 没有直接的 “warp memory”                | shared memory                                | global memory                         |
    | 同步与通信手段 | （自身天然有序）      | __syncwarp(), __shfl_sync()...          | __syncthreads()...                           | kernel 边界                           |
-
+4. SIMD：single instruction multiple data，一个指令操作多个数据（向量化）。
+   SIMT: single instruction multiple threads，每个线程跑一样的代码，但是数据、状态可能不同。
+   不对。branch divergence 会让一个 warp 需要分开跑不同的分支，有性能代价。
