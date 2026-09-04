@@ -47,13 +47,15 @@ __global__ void reduce_interleaved(const float *in, float *out) {
     buf[tid] = in[base + tid];
     __syncthreads();
     
-    for (int s = 1; s <= 128; s *= 2) {
+    for (int s = 1; s <= blockDim.x; s *= 2) {
         if (tid % (s * 2) == 0) {
             buf[tid] += buf[tid + s];
         }
         __syncthreads();
     }
-    out[blockIdx.x] = buf[0];
+
+    if (threadIdx.x == 0)
+        out[blockIdx.x] = buf[0];
 }
 
 __global__ void reduce_contiguous(const float *in, float *out) {
@@ -64,15 +66,17 @@ __global__ void reduce_contiguous(const float *in, float *out) {
     buf[tid] = in[base + tid];
     __syncthreads();
 
-    for (int s = 128; s >= 1; s /= 2) {
+    for (int s = blockDim.x; s >= 1; s /= 2) {
         if (tid < s) {
             buf[tid] += buf[tid + s];
         }
         __syncthreads();
     }
 
-    out[blockIdx.x] = buf[0];
+    if (threadIdx.x == 0)
+        out[blockIdx.x] = buf[0];
 }
+
 
 // ---------------- 以下是判测与计时，不要修改 ----------------
 
