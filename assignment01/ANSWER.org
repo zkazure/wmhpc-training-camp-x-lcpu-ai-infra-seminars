@@ -99,8 +99,20 @@
 4. concept：把同步点前后的两个计算拆成两个 kernel，第一个全部完成之后，才提交第二个。
 5. from-scratch:
    #+begin_example
-   interleaved: PASS  平均 0.0089 ms
-   contiguous : PASS  平均 0.0088 ms
-   interleaved / contiguous = 1.02x
-   WARN: 两版耗时几乎一样，检查是不是写成同一个实现了（不影响 PASS）
+   interleaved: PASS  平均 0.0148 ms
+   contiguous : PASS  平均 0.0094 ms
+   interleaved / contiguous = 1.57x
    #+end_example
+
+* 存储空间
+
+1. concept
+   | 空间     | 谁可见     | 生命周期    | 片上/片外 | 谁管理 |
+   |----------+------------+-------------+-----------+--------|
+   | register | 单个线程   | 线程        | 片上      | 编译器 |
+   | local    | 单个线程   | kernel      | 片外      | 编译器 |
+   | shared   | 单个 block | kernel      | 片上      | 手动   |
+   | global   | 单个 grid  | application | 片外      | 手动   |
+   | constant | 单个 grid  | application | 片外      | 手动   |
+   | L1 cache | 单个 SM    | /           | 片上      | GPU    |
+   | L2 cache | 所有 SM    | /           | 片上      | GPU    |
