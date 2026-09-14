@@ -123,3 +123,11 @@
 4. concept.
    - 正确。和 register 一样，但是在片外的显存上。
    - 正确。但是为什么？
+5. fill-in
+6. modify.
+   #+begin_example
+   naive: PASS  平均 3.8070 ms  (4.41 GB/s)
+   priv : PASS  平均 0.0222 ms  (755.52 GB/s)
+   naive / priv = 171.44x
+   #+end_example
+   原来的最大并行数量受限于 BINS，而现在最大并行数可以是 BINS * gridDim.x
