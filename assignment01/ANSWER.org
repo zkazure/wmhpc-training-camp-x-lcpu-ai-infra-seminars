@@ -116,3 +116,7 @@
    | constant | 单个 grid  | application | 片外      | 手动   |
    | L1 cache | 单个 SM    | /           | 片上      | GPU    |
    | L2 cache | 所有 SM    | /           | 片上      | GPU    |
+2. finished
+3. 确实速度几乎没有差距。
+   - 数据量比较少，已经被搬入 cache
+   - 适合处理同一个 warp 访问相同地址的情况。
