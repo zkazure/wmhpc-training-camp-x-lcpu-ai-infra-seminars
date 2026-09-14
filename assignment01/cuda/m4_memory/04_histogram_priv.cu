@@ -29,6 +29,7 @@ __global__ void histogram_priv(const unsigned char *data, unsigned int *hist,
     for (int i = threadIdx.x; i < BINS; i += blockDim.x) {
         block_hist[i] = 0;
     }
+    __syncthreads();
     
     for (int i = tid; i < n; i += stride) {
         atomicAdd(&block_hist[data[i]], 1u);
