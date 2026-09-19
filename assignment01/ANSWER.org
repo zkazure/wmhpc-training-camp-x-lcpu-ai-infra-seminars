@@ -188,3 +188,6 @@
    | 编号     | blockIdx, threadIdx | bid           |        |
    | 数据分工 | 使用全局下标         | 编译器自动处理 |        |
    | 边界处理 | if 判断             | mask          |        |
+3. concept：
+   - 编译器
+   - thread, 内存管理，显式边界判断。
