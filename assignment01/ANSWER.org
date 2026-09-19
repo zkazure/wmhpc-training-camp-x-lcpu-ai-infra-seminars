@@ -181,3 +181,10 @@
    - 错误，tile 是 immutable 的，可以在任何地方，由编译器自己决定，同时是 block private 的。
    - 正确
    - 在某个版本之后可以同时使用。
+2. concept：
+   |          | CUDA SIMT           | cuTile        | Triton |
+   |----------+---------------------+---------------+--------|
+   | 并行单位 | thread in block     | block         |        |
+   | 编号     | blockIdx, threadIdx | bid           |        |
+   | 数据分工 | 使用全局下标         | 编译器自动处理 |        |
+   | 边界处理 | if 判断             | mask          |        |
